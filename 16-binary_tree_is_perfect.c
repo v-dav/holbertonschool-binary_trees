@@ -1,4 +1,5 @@
 #include "binary_trees.h"
+#include <stdio.h>
 
 /**
  * binary_tree_height - a function that measures
@@ -28,28 +29,23 @@ size_t binary_tree_height(const binary_tree_t *tree)
 }
 
 /**
- * binary_tree_balance - a function that measures
- * the balance factor of a binary tree
- * @tree: is a pointer to the root node of the tree
- * to measure the balance factor
+ * binary_tree_depth - a function that measures
+ * the depth of a nod of a binary tree
+ * @tree: a pointer to the node to measure the depth
  *
- * Return: the balance factor
+ * Return: the node's depth
  */
-int binary_tree_balance(const binary_tree_t *tree)
+size_t binary_tree_depth(const binary_tree_t *tree)
 {
-	size_t left_height = -1;
-	size_t right_height = -1;
+	int depth = 0;
 
 	if (!tree)
 		return (0);
 
-	if (tree->left)
-		left_height = binary_tree_height(tree->left);
+	if (tree->parent)
+		depth = binary_tree_depth(tree->parent) + 1;
 
-	if (tree->right)
-		right_height = binary_tree_height(tree->right);
-
-	return (left_height - right_height);
+	return (depth);
 }
 
 /**
@@ -86,23 +82,33 @@ int binary_tree_is_full(const binary_tree_t *tree)
 int binary_tree_is_perfect(const binary_tree_t *tree)
 {
 	size_t height = 0;
-	size_t left_height = 0;
-	size_t right_height = 0;
+	size_t left_depth = 0;
+	size_t right_depth = 0;
 
 	if (!tree)
 		return (0);
 
-	if (!binary_tree_is_full(tree))
+	printf("%d\n", binary_tree_is_full(tree));
+	
+	if (binary_tree_is_full(tree) == 0)
 		return (0);
 
 	height = binary_tree_height(tree);
+	printf("Tree height: %ld\n", height);
 
 	if (tree->left)
-		left_height = binary_tree_height(tree->left);
+	{
+		left_depth = binary_tree_depth(tree->left);
+		printf("Left depth: %ld\n", left_depth);
+	}
+		
 	if (tree->right)
-		right_height = binary_tree_height(tree->right);
+	{
+		right_depth = binary_tree_depth(tree->right);
+		printf("Right depth: %ld\n", right_depth);
+	}
 
-	if ((height == left_height) && (height == right_height))
+	if ((height == left_depth) && (height == right_depth))
 		return (1);
 	else
 		return (0);

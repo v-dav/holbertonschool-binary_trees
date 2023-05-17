@@ -87,26 +87,17 @@ int binary_tree_is_perfect(const binary_tree_t *tree)
 
 	if (!tree)
 		return (0);
-
-	// printf("%d\n", binary_tree_is_full(tree));
 	
 	if (binary_tree_is_full(tree) == 0)
 		return (0);
 
 	height = binary_tree_height(tree);
-	// printf("Tree height: %ld\n", height);
 
 	if (tree->left)
-	{
 		left_depth = binary_tree_depth(tree->left);
-		// printf("Left depth: %ld\n", left_depth);
-	}
 		
 	if (tree->right)
-	{
 		right_depth = binary_tree_depth(tree->right);
-		// printf("Right depth: %ld\n", right_depth);
-	}
 
 	if ((height == left_depth) && (height == right_depth))
 		return (1);
